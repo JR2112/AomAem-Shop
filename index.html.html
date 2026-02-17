@@ -1,131 +1,664 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>JR.21 MARBO V.</title>
-  <style>
-    * { box-sizing: border-box; }
-    body { margin:0; font-family: Arial, sans-serif; background:#f2f2f2; }
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>JR.21 MARBO V.</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
 
-    /* Header */
-    .header {
-      background: linear-gradient(90deg, #b71c1c, #d32f2f);
-      color:#fff;
-      padding:15px 30px;
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-    }
-    .header-right img {
-      height:45px;
-      border-radius:8px;
-    }
-    .logo { font-weight:bold; font-size:20px; }
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f2f2f2;
+        }
 
-    /* Layout */
-    .container { display:flex; padding:20px; gap:20px; }
+        /* ===== Header ===== */
+        .header {
+            background: linear-gradient(90deg, #b71c1c, #d32f2f);
+            color: #fff;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
 
-    /* Sidebar */
-    .sidebar {
-      width:220px; background:#fff; border-radius:10px; padding:15px;
-    }
-    .sidebar input {
-      width:100%; padding:10px; margin-bottom:15px;
-      border-radius:6px; border:1px solid #ccc;
-    }
-    .menu {
-      background:#f0cece; padding:10px; border-radius:6px;
-      margin-bottom:10px; cursor:pointer;
-    }
+        .header-right img {
+            height: 45px;
+            border-radius: 8px;
+        }
 
-    /* Products */
-    .products {
-      flex:1;
-      display:grid;
-      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-      gap:20px;
-    }
-    .card {
-      background:#fff; border-radius:15px; padding:15px;
-      box-shadow:0 4px 10px rgba(0,0,0,0.1);
-    }
-    .card img {
-      width:100%; height:200px; object-fit:cover;
-      border-radius:12px;
-    }
-    .name { font-weight:bold; margin-top:10px; }
-    .price { color:#000; }
-    .stock { font-size:13px; color:#555; margin-top:4px; }
-    .out { color:red; font-weight:bold; }
-  </style>
+        .logo-box {
+            position: relative;
+            border: 2px solid #ffffff;
+            color: #ffffff;
+            padding: 8px 18px;
+            border-radius: 10px;
+            font-weight: bold;
+            font-size: 20px;
+            letter-spacing: 1px;
+        }
+
+            .logo-box::after {
+                content: "★";
+                position: absolute;
+                top: -10px;
+                right: -10px;
+                width: 28px;
+                height: 28px;
+                background: #fff;
+                color: #b71c1c;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 16px;
+                font-weight: bold;
+                box-shadow: 0 0 10px gold;
+                animation: starFloat 3s ease-in-out infinite, starGlow 1.8s ease-in-out infinite;
+            }
+
+        @keyframes starFloat {
+            0% {
+                transform: translateY(0) rotate(0deg);
+            }
+
+            50% {
+                transform: translateY(-4px) rotate(8deg);
+            }
+
+            100% {
+                transform: translateY(0) rotate(0deg);
+            }
+        }
+
+        @keyframes starGlow {
+            0%,100% {
+                box-shadow: 0 0 6px gold;
+            }
+
+            50% {
+                box-shadow: 0 0 18px gold;
+            }
+        }
+
+        /* ===== Layout ===== */
+        .container {
+            display: flex;
+            padding: 20px;
+            gap: 20px;
+        }
+
+        /* ===== Sidebar ===== */
+        .sidebar {
+            width: 180px;
+            background: #fff;
+            border-radius: 10px;
+            padding: 12px;
+        }
+
+            .sidebar input {
+                width: 100%;
+                padding: 6px 8px;
+                margin-bottom: 10px;
+                border-radius: 6px;
+                border: 1px solid #ccc;
+                font-size: 13px;
+            }
+
+        .menu {
+            background: #f0cece;
+            padding: 6px 8px;
+            border-radius: 6px;
+            margin-bottom: 8px;
+            cursor: pointer;
+            font-size: 13px;
+            position: relative;
+            overflow: hidden;
+        }
+
+            /* ===== Ice Crack Effect ===== */
+            .menu.ice::after {
+                content: "";
+                position: absolute;
+                inset: 0;
+                background: radial-gradient(circle at center, rgba(255,255,255,0.95) 0%, rgba(173,216,230,0.85) 40%, rgba(0,136,255,0.65) 70%, transparent 72%);
+                animation: iceCrack 0.45s ease-out;
+                pointer-events: none;
+            }
+
+        @keyframes iceCrack {
+            0% {
+                transform: scale(0);
+                opacity: 1;
+            }
+
+            60% {
+                transform: scale(1.15);
+                opacity: 1;
+            }
+
+            100% {
+                transform: scale(1.4);
+                opacity: 0;
+            }
+        }
+
+        /* ===== Products ===== */
+        .products {
+            position: relative;
+            flex: 1;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 20px;
+            background-image: url('https://github.com/JR2112/JR.21-MARBO-V./blob/main/%E0%B8%9E%E0%B8%B7%E0%B9%89%E0%B8%99%E0%B8%AB%E0%B8%A5%E0%B8%B1%E0%B8%87.jpg?raw=true');
+            background-size: cover;
+            background-position: center;
+            padding: 20px;
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+            .products::before {
+                content: "";
+                position: absolute;
+                inset: 0;
+                background: inherit;
+                filter: blur(8px);
+                transform: scale(1.1);
+                z-index: 0;
+            }
+
+            .products > * {
+                position: relative;
+                z-index: 1;
+            }
+
+        .card {
+            background: #fff;
+            border-radius: 15px;
+            padding: 15px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            transition: box-shadow 0.3s ease, transform 0.3s ease, opacity 0.3s ease;
+            position: relative;
+        }
+
+            /* ===== Sold Out Style ===== */
+            .card.sold-out {
+                opacity: 0.55; /* จางลงเล็กน้อย */
+                filter: grayscale(40%) saturate(80%); /* ยังมีสีเหลือ */
+                pointer-events: none;
+            }
+
+                .card.sold-out::after {
+                    content: "SOLD OUT";
+                    position: absolute;
+                    inset: 0;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    font-size: 28px;
+                    font-weight: bold;
+                    color: #b71c1c;
+                    background: rgba(255,255,255,0.6);
+                    border-radius: 15px;
+                    letter-spacing: 3px;
+                }
+
+            .card.best-seller::before {
+                content: "🔥 ขายดี";
+                position: absolute;
+                top: 10px;
+                left: 10px;
+                background: linear-gradient(45deg, #ff5722, #ff9800);
+                color: #fff;
+                font-size: 12px;
+                font-weight: bold;
+                padding: 4px 8px;
+                border-radius: 8px;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+                animation: bestPulse 1.5s ease-in-out infinite;
+            }
+
+        @keyframes bestPulse {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.05);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .card.last-one {
+            box-shadow: 0 0 0 2px #ff9800, 0 0 18px rgba(255,152,0,0.6);
+            animation: pulseLast 1.5s ease-in-out infinite;
+        }
+
+        @keyframes pulseLast {
+            0% {
+                box-shadow: 0 0 0 2px #ff9800, 0 0 10px rgba(255,152,0,0.4);
+            }
+
+            50% {
+                box-shadow: 0 0 0 2px #ff9800, 0 0 22px rgba(255,152,0,0.8);
+            }
+
+            100% {
+                box-shadow: 0 0 0 2px #ff9800, 0 0 10px rgba(255,152,0,0.4);
+            }
+        }
+
+        .card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 12px;
+            cursor: pointer;
+        }
+
+        .name {
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        .price {
+            color: #000;
+        }
+
+        .stock {
+            font-size: 13px;
+            color: #555;
+            margin-top: 4px;
+        }
+
+        .out {
+            color: red;
+            font-weight: bold;
+        }
+
+        .last-update {
+            text-align: center;
+            font-size: 12px;
+            color: #666;
+            margin: 4px 0 6px;
+        }
+
+        .thank-you {
+            position: fixed;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 999;
+            padding: 14px 20px;
+            max-width: 100%;
+            text-align: center;
+            background: rgba(255,255,255,0.95);
+            border-radius: 14px;
+            font-weight: bold;
+            font-size: 16px;
+            line-height: 1.6;
+            color: #b71c1c;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+                padding: 10px;
+            }
+
+            .sidebar {
+                width: 160px;
+                padding: 10px;
+            }
+
+            .thank-you {
+                font-size: 15px;
+                padding: 14px 16px;
+            }
+        }
+
+        /* ===== Image Preview Modal ===== */
+        .image-modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.85);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+        }
+
+            .image-modal img {
+                max-width: 90%;
+                max-height: 90%;
+                border-radius: 16px;
+                box-shadow: 0 0 30px rgba(255,255,255,0.3);
+                animation: zoomIn 0.25s ease-out;
+            }
+
+        @keyframes zoomIn {
+            from {
+                transform: scale(0.85);
+                opacity: 0;
+            }
+
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        /* ===== Fake Chat Style ===== */
+        #chatToggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #b71c1c;
+            color: #fff;
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            cursor: pointer;
+            z-index: 3000;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+
+        #fakeChat {
+            position: fixed;
+            bottom: 90px;
+            right: 20px;
+            width: 280px;
+            max-height: 380px;
+            background: #fff;
+            border-radius: 14px;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.3);
+            display: none;
+            flex-direction: column;
+            z-index: 3000;
+        }
+
+        .chat-header {
+            background: #b71c1c;
+            color: #fff;
+            padding: 10px;
+            border-radius: 14px 14px 0 0;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .chat-body {
+            padding: 10px;
+            flex: 1;
+            overflow-y: auto;
+            font-size: 13px;
+        }
+
+        .msg {
+            margin-bottom: 8px;
+            padding: 6px 10px;
+            border-radius: 10px;
+            max-width: 80%;
+        }
+
+            .msg.bot {
+                background: #f1f1f1;
+            }
+
+            .msg.user {
+                background: #b71c1c;
+                color: #fff;
+                margin-left: auto;
+            }
+
+        .chat-input {
+            display: flex;
+            border-top: 1px solid #ddd;
+        }
+
+            .chat-input input {
+                flex: 1;
+                border: none;
+                padding: 8px;
+                font-size: 13px;
+            }
+
+            .chat-input button {
+                border: none;
+                background: #b71c1c;
+                color: #fff;
+                padding: 0 12px;
+                cursor: pointer;
+            }
+    </style>
 </head>
 <body>
 
-  <!-- Header -->
-  <div class="header">
-    <div class="logo">JR.21 MARBO V</div>
-    <div class="header-right">
-      <img src="C:\Users\PC\Desktop\เว็บขายของอ๋อม\LOGO.jpg" alt="logo">
-    </div>
-  </div>
-  </div>
-
-  <!-- Content -->
-  <div class="container">
-
-    <!-- Sidebar -->
-    <div class="sidebar">
-      <input type="text" placeholder="Search รายการที่ต้องการหา...">
-      <div class="menu" onclick="showMenu('menu1')">MARBO 9K</div>
-      <div class="menu" onclick="showMenu('menu2')">น้ำหวาน ยาแก้ไอ</div>
-      <div class="menu" onclick="showMenu('menu3')">ขอบคุณที่เยี่ยมชม🩶</div>
+    <div class="header">
+        <div class="header-left">
+            <div class="logo-box">JR.21 MARBO V.</div>
+            <div class="last-update">📅 อัปเดตล่าสุด: <span id="updateDate"></span></div>
+        </div>
+        <div class="header-right">
+            <img src="LOGO.jpg" alt="logo">
+        </div>
     </div>
 
-    <!-- Products -->
-    <div class="products" id="products">
+    <div class="container">
+        <div class="sidebar">
+            <input type="text" id="searchInput" placeholder="Search รายการที่ต้องการหา..." onkeyup="searchProduct()">
+            <div class="menu" onclick="showMenu('menu1')">MARBO 9K</div>
+            <div class="menu" onclick="showMenu('menu2')">น้ำหวาน ยาแก้ไอ</div>
+            <div class="menu" onclick="showMenu('menu3')">รอสินค้า STOCK</div>
+        </div>
 
-      <!-- ===== Menu 1 : สินค้าเดิมทั้งหมด ===== -->
-      <div class="card" data-menu="menu1"><img src="C:/Users/PC/Desktop/เว็บขายของอ๋อม/1.webp"><div class="name">SOUR GUMMY</div><div class="stock">(เหลือ 3 ชิ้น)</div><div class="price">420 THB</div></div>
-      <div class="card" data-menu="menu1"><img src="C:/Users/PC/Desktop/เว็บขายของอ๋อม/2.webp"><div class="name">PINK BERRY</div><div class="stock">(เหลือ 1 ชิ้น)</div><div class="price">420 THB</div></div>
-      <div class="card" data-menu="menu1"><img src="C:/Users/PC/Desktop/เว็บขายของอ๋อม/3.webp"><div class="name">WATERMELON BUBBLEGUM</div><div class="stock">(เหลือ 1 ชิ้น)</div><div class="price">420 THB</div></div>
-      <div class="card" data-menu="menu1"><img src="C:/Users/PC/Desktop/เว็บขายของอ๋อม/4.webp"><div class="name">WATERMELON</div><div class="stock">(เหลือ 2 ชิ้น)</div><div class="price">420 THB</div></div>
-      <div class="card" data-menu="menu1"><img src="C:/Users/PC/Desktop/เว็บขายของอ๋อม/5.webp"><div class="name">PEACH STRAWBERRY</div><div class="stock">(เหลือ 1 ชิ้น)</div><div class="price">420 THB</div></div>
-      <div class="card" data-menu="menu1"><img src="C:/Users/PC/Desktop/เว็บขายของอ๋อม/6.webp"><div class="name">KYOHO GRAPE</div><div class="stock out">(สินค้าหมด)</div><div class="price">420 THB</div></div>
-      <div class="card" data-menu="menu1"><img src="C:/Users/PC/Desktop/เว็บขายของอ๋อม/7.webp"><div class="name">ZAPPLE</div><div class="stock out">(สินค้าหมด)</div><div class="price">420 THB</div></div>
-      <div class="card" data-menu="menu1"><img src="C:/Users/PC/Desktop/เว็บขายของอ๋อม/8.webp"><div class="name">BLUE ICE</div><div class="stock out">(สินค้าหมด)</div><div class="price">420 THB</div></div>
-      <div class="card" data-menu="menu1"><img src="C:/Users/PC/Desktop/เว็บขายของอ๋อม/9.webp"><div class="name">PEACH</div><div class="stock out">(สินค้าหมด)</div><div class="price">420 THB</div></div>
-      <div class="card" data-menu="menu1"><img src="C:/Users/PC/Desktop/เว็บขายของอ๋อม/10.webp"><div class="name">APPLE ALOE</div><div class="stock out">(สินค้าหมด)</div><div class="price">420 THB</div></div>
-      <div class="card" data-menu="menu1"><img src="C:/Users/PC/Desktop/เว็บขายของอ๋อม/11.webp"><div class="name">MIXBERRY</div><div class="stock">(เหลือ 1 ชิ้น)</div><div class="price">420 THB</div></div>
-      <div class="card" data-menu="menu1"><img src="C:/Users/PC/Desktop/เว็บขายของอ๋อม/12.webp"><div class="name">RAINBOW CANDY</div><div class="stock out">(สินค้าหมด)</div><div class="price">420 THB</div></div>
-      <div class="card" data-menu="menu1"><img src="C:/Users/PC/Desktop/เว็บขายของอ๋อม/13.webp"><div class="name">ORANGE SOUR</div><div class="stock out">(สินค้าหมด)</div><div class="price">420 THB</div></div>
-      <div class="card" data-menu="menu1"><img src="C:/Users/PC/Desktop/เว็บขายของอ๋อม/14.webp"><div class="name">COLA</div><div class="stock out">(สินค้าหมด)</div><div class="price">420 THB</div></div>
-      <div class="card" data-menu="menu1"><img src="C:/Users/PC/Desktop/เว็บขายของอ๋อม/15.webp"><div class="name">DOUBLE MINT</div><div class="stock out">(สินค้าหมด)</div><div class="price">420 THB</div></div>
-      <div class="card" data-menu="menu1"><img src="C:\Users\PC\Desktop\เว็บขายของอ๋อม\16.webp"><div class="name">STRAWBERRY MILKSHAKE</div><div class="stock out">(สินค้าหมด)</div><div class="price">420 THB</div></div>
-      <div class="card" data-menu="menu1"><img src="C:\Users\PC\Desktop\เว็บขายของอ๋อม\17.webp"><div class="name">MENTHOL</div><div class="stock out">(สินค้าหมด)</div><div class="price">420 THB</div></div>
-      <div class="card" data-menu="menu1"><img src="C:\Users\PC\Desktop\เว็บขายของอ๋อม\18.webp"><div class="name">SPARKING LEMO</div><div class="stock out">(สินค้าหมด)</div><div class="price">420 THB</div></div>
-      <div class="card" data-menu="menu1"><img src="C:\Users\PC\Desktop\เว็บขายของอ๋อม\19.webp"><div class="name">GRAPE</div><div class="stock out">(สินค้าหมด)</div><div class="price">420 THB</div></div>
-      <div class="card" data-menu="menu1"><img src="C:\Users\PC\Desktop\เว็บขายของอ๋อม\20.webp"><div class="name">GRAPE LYCHEE</div><div class="stock out">(สินค้าหมด)</div><div class="price">420 THB</div></div>
-      
-      <!-- ===== Menu 2 : มีสินค้า 2 ชิ้น ===== -->
-      <div class="card" data-menu="menu2"><img src="C:\Users\PC\Desktop\เว็บขายของอ๋อม\00.jpg"><div class="name">ALLERGIN {5ดาว}</div><div class="stock">(เหลือ 7 ชิ้น)</div><div class="price">90 THB</div></div>
-      <div class="card" data-menu="menu2"><img src="C:\Users\PC\Desktop\เว็บขายของอ๋อม\0.jpg"><div class="name">SIX NINE {69}</div><div class="stock">(สินค้าหมด)</div><div class="price">70 THB</div></div>
+        <div class="products" id="products">
+            <!-- ===== Menu 1 : สินค้าเดิมทั้งหมด ===== -->
+            <div class="card" data-menu="menu1"><img src="1.webp"><div class="name">SOUR GUMMY</div><div class="stock out">สินค้าหมด)</div><div class="price">420 THB</div></div>
+            <div class="card " data-menu="menu1"><img src="2.webp"><div class="name">PINK BERRY</div><div class="stock ">(เหลือ 3 ชิ้น)</div><div class="price">420 THB</div></div>
+            <div class="card best-seller" data-menu="menu1"><img src="3.webp"><div class="name">WATERMELON BUBBLEGUM</div><div class="stock ">(เหลือ 2 ชิ้น)</div><div class="price">420 THB</div></div>
+            <div class="card" data-menu="menu1"><img src="4.webp"><div class="name">WATERMELON</div><div class="stock out">(สินค้าหมด)</div><div class="price">420 THB</div></div>
+            <div class="card" data-menu="menu1"><img src="5.webp"><div class="name">PEACH STRAWBERRY</div><div class="stock ">(เหลือ 2 ชิ้น)</div><div class="price">420 THB</div></div>
+            <div class="card" data-menu="menu1"><img src="6.webp"><div class="name">KYOHO GRAPE</div><div class="stock out">(สินค้าหมด)</div><div class="price">420 THB</div></div>
+            <div class="card" data-menu="menu1"><img src="7.webp"><div class="name">ZAPPLE</div><div class="stock out">(สินค้าหมด)</div><div class="price">420 THB</div></div>
+            <div class="card best-seller" data-menu="menu1"><img src="8.webp"><div class="name">BLUE ICE</div><div class="stock out">(สินค้าหมด)</div><div class="price">420 THB</div></div>
+            <div class="card" data-menu="menu1"><img src="9.webp"><div class="name">PEACH</div><div class="stock out">(สินค้าหมด)</div><div class="price">420 THB</div></div>
+            <div class="card" data-menu="menu1"><img src="10.webp"><div class="name">APPLE ALOE</div><div class="stock out">(สินค้าหมด)</div><div class="price">420 THB</div></div>
+            <div class="card" data-menu="menu1"><img src="11.webp"><div class="name">MIXBERRY</div><div class="stock out">(สินค้าหมด)</div><div class="price">420 THB</div></div>
+            <div class="card best-seller" data-menu="menu1"><img src="12.webp"><div class="name">RAINBOW CANDY</div><div class="stock out">(สินค้าหมด)</div><div class="price">420 THB</div></div>
+            <div class="card" data-menu="menu1"><img src="13.webp"><div class="name">ORANGE SOUR</div><div class="stock out">(สินค้าหมด)</div><div class="price">420 THB</div></div>
+            <div class="card" data-menu="menu1"><img src="14.webp"><div class="name">COLA</div><div class="stock out">(สินค้าหมด)</div><div class="price">420 THB</div></div>
+            <div class="card" data-menu="menu1"><img src="15.webp"><div class="name">DOUBLE MINT</div><div class="stock out">(สินค้าหมด)</div><div class="price">420 THB</div></div>
+            <div class="card" data-menu="menu1"><img src="16.webp"><div class="name">STRAWBERRY MILKSHAKE</div><div class="stock ">(เหลือ 1 ชิ้น)</div><div class="price">420 THB</div></div>
+            <div class="card" data-menu="menu1"><img src="17.webp"><div class="name">MENTHOL FREEZE</div><div class="stock out">(สินค้าหมด)</div><div class="price">420 THB</div></div>
+            <div class="card" data-menu="menu1"><img src="18.webp"><div class="name">SPARKING LEMON</div><div class="stock ">(เหลือ 1 ชิ้น)</div><div class="price">420 THB</div></div>
+            <div class="card" data-menu="menu1"><img src="19.webp"><div class="name">GRAPE</div><div class="stock out">(สินค้าหมด)</div><div class="price">420 THB</div></div>
+            <div class="card" data-menu="menu1"><img src="20.webp"><div class="name">GRAPE LYCHEE</div><div class="stock out">(สินค้าหมด)</div><div class="price">420 THB</div></div>
+            <div class="card" data-menu="menu1"><img src="21.webp"><div class="name">STRAWBERRY</div><div class="stock out">(สินค้าหมด)</div><div class="price">420 THB</div></div>
 
-      
+            <!-- ===== Menu 2 : มีสินค้า 2 ชิ้น ===== -->
+            <div class="card best-seller" data-menu="menu2"><img src="00.jpg"><div class="name">ALLERGIN {5ดาว} B.KMH</div><div class="stock ">(เหลือ 4 ชิ้น)</div><div class="price">90 THB</div></div>
+            <div class="card best-seller" data-menu="menu2"><img src="00.jpg"><div class="name">ALLERGIN {5ดาว} B.DK</div><div class="stock ">(เหลือ 10 ชิ้น)</div><div class="price">90 THB</div></div>
+            <div class="card" data-menu="menu2"><img src="0.jpg"><div class="name">SIX NINE {69} B.KMH</div><div class="stock out">(สินค้าหมด)</div><div class="price">70 THB</div></div>
+            <div class="card" data-menu="menu2"><img src="0.jpg"><div class="name">SIX NINE {69} B.DK</div><div class="stock out">(สินค้าหมด)</div><div class="price">70 THB</div></div>
+
+            <!-- ===== Menu 3 : ช่องวางสินค้า ===== -->
+            <div class="card" data-menu="menu3"><img src="LOGO.jpg"><div class="name">สินค้าใหม่ 1</div><div class="stock">(รอสินค้า)</div><div class="price">-</div></div>
+            <div class="card" data-menu="menu3"><img src="LOGO.jpg"><div class="name">สินค้าใหม่ 2</div><div class="stock">(รอสินค้า)</div><div class="price">-</div></div>
+            <div class="card" data-menu="menu3"><img src="LOGO.jpg"><div class="name">สินค้าใหม่ 3</div><div class="stock">(รอสินค้า)</div><div class="price">-</div></div>
+            <div class="card" data-menu="menu3"><img src="LOGO.jpg"><div class="name">สินค้าใหม่ 4</div><div class="stock">(รอสินค้า)</div><div class="price">-</div></div>
+            <div class="card" data-menu="menu3"><img src="LOGO.jpg"><div class="name">สินค้าใหม่ 5</div><div class="stock">(รอสินค้า)</div><div class="price">-</div></div>
+
+        </div>
+
+        <!-- ===== Image Modal ===== -->
+        <div class="image-modal" id="imageModal" onclick="closeImage()">
+            <img id="modalImg" src="" alt="preview">
+        </div>
+
+        <!-- ===== Store Conditions ===== -->
+        <div class="store-conditions">
+            <strong>📌 คำแนะนำของร้าน</strong><br>
+            • เช็คสินค้าหน้าร้านก่อนทุกครั้ง<br>
+            • สินค้าของแท้ 100%<br>
+            • 🙏 ขอบคุณที่สนับสนุนร้าน JR.21 MARBO V. เสมอมา 🙏
+
+        </div>
+
+        <!-- ===== Fake Chat Button ===== -->
+        <div id="chatToggle">💬</div>
+
+        <!-- ===== Fake Chat Box ===== -->
+        <div id="fakeChat">
+            <div class="chat-header">แชทกับร้าน</div>
+            <div class="chat-body" id="chatBody">
+                <div class="msg bot">สวัสดีครับ 😊 มีอะไรให้ร้านช่วยไหม</div>
+            </div>
+            <div class="chat-input">
+                <input type="text" id="chatInput" placeholder="พิมพ์ข้อความ...">
+                <button onclick="sendChat()">ส่ง</button>
+            </div>
+        </div>
+
+        <!-- ===== Thank You Message (Fixed Bottom) ===== -->
+
     </div>
 
-  </div>
+    <script>
+// ===== No Firebase / Fake Chat Only =====
 
-  <script>
+    let currentMenu = 'menu1';
+
     function showMenu(menu) {
-      const cards = document.querySelectorAll('.card');
-      cards.forEach(card => {
-        card.style.display = card.dataset.menu === menu ? 'block' : 'none';
-      });
+        currentMenu = menu;
+
+        const container = document.getElementById('products');
+        const cards = [...container.querySelectorAll('.card')]
+            .filter(card => card.dataset.menu === menu);
+
+        // เรียงลำดับ: ขายดี -> มีของ -> หมด
+        cards.sort((a, b) => {
+            const aBest = a.classList.contains('best-seller') ? 1 : 0;
+            const bBest = b.classList.contains('best-seller') ? 1 : 0;
+            if (aBest !== bBest) return bBest - aBest;
+
+            const aOut = a.querySelector('.stock')?.classList.contains('out') ? 1 : 0;
+            const bOut = b.querySelector('.stock')?.classList.contains('out') ? 1 : 0;
+            return aOut - bOut;
+        });
+
+        // ซ่อนทั้งหมดก่อน
+        document.querySelectorAll('.card').forEach(card => {
+            card.style.display = 'none';
+        });
+
+        // แสดงและจัดเรียงใหม่
+        cards.forEach(card => {
+            card.style.display = 'block';
+            container.appendChild(card);
+        });
+
+        // เอฟเฟกต์น้ำแข็งที่เมนู
+        document.querySelectorAll('.menu').forEach(m => m.classList.remove('ice'));
+        const activeMenu = [...document.querySelectorAll('.menu')]
+            .find(m => m.getAttribute('onclick')?.includes(menu));
+        if (activeMenu) {
+            activeMenu.classList.add('ice');
+            setTimeout(() => activeMenu.classList.remove('ice'), 500);
+        }
     }
 
-    // เริ่มต้นแสดง Menu 1
+    function searchProduct() {
+        const text = searchInput.value.toLowerCase();
+        document.querySelectorAll('.card').forEach(card => {
+            const name = card.querySelector('.name').textContent.toLowerCase();
+            card.style.display = (card.dataset.menu === currentMenu && name.includes(text)) ? 'block' : 'none';
+        });
+    }
+
+    const today = new Date();
+    const options = { day: '2-digit', month: 'short', year: 'numeric' };
+    document.getElementById('updateDate').textContent = today.toLocaleDateString('th-TH', options);
+
     showMenu('menu1');
-  </script>
+
+    // ===== Fake Chat Logic =====
+    const chatToggle = document.getElementById('chatToggle');
+    const fakeChat = document.getElementById('fakeChat');
+    chatToggle.onclick = () => {
+        fakeChat.style.display = fakeChat.style.display === 'flex' ? 'none' : 'flex';
+    };
+
+    window.sendChat = function sendChat() {
+
+        const body = document.getElementById('chatBody');
+        const input = document.getElementById('chatInput');
+        const text = input.value.trim();
+        if (!text) return;
+
+        const userMsg = document.createElement('div');
+        userMsg.className = 'msg user';
+        userMsg.textContent = text;
+        body.appendChild(userMsg);
+
+        input.value = '';
+        body.scrollTop = body.scrollHeight;
+
+        setTimeout(() => {
+            const replies = [
+                'ทางร้านได้รับข้อความแล้วครับ 🙏',
+                'รับทราบครับ เดี๋ยวแอดมินตรวจสอบให้นะครับ 😊',
+                'ขอบคุณที่ติดต่อร้านครับ ทางร้านกำลังเช็คข้อมูลให้ครับ',
+                'โอเคครับ หากมีรายละเอียดเพิ่มเติมแจ้งได้เลยนะครับ'
+            ];
+            const botMsg = document.createElement('div');
+            botMsg.className = 'msg bot';
+            botMsg.textContent = replies[Math.floor(Math.random() * replies.length)];
+            body.appendChild(botMsg);
+            body.scrollTop = body.scrollHeight;
+        }, 800);
+    }
+
+    // ===== Image Preview Logic =====
+    document.querySelectorAll('.card img').forEach(img => {
+        img.addEventListener('click', () => {
+            const modal = document.getElementById('imageModal');
+            const modalImg = document.getElementById('modalImg');
+            modalImg.src = img.src;
+            modal.style.display = 'flex';
+        });
+    });
+
+    function closeImage() {
+        document.getElementById('imageModal').style.display = 'none';
+    }
+
+    // ===== Highlight Last Item =====
+    document.querySelectorAll('.card').forEach(card => {
+        const stockEl = card.querySelector('.stock');
+        const stockText = stockEl?.textContent || '';
+
+        if (stockText.includes('เหลือ 1')) {
+            card.classList.add('last-one');
+        }
+
+        // ===== Mark Sold Out =====
+        if (stockEl?.classList.contains('out')) {
+            card.classList.add('sold-out');
+        }
+    });
+    </script>
 </body>
 </html>
+
